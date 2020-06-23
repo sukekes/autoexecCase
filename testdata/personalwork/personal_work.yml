@@ -1,0 +1,37 @@
+project_name: "测试业务系统"
+
+base_url: "http://10.215.142.114/LightTower/desktop"
+
+case_num: "testsuite_002"
+
+case_name: "personal_work"
+
+testsuite: "personalwork"
+
+case_description: "进入我的任务页面，进而进入我的用例"
+
+pre_case:
+-
+  "name": "login_by_manager"
+  "suite": "loginpage"
+
+test_step:
+  -
+    "loc_type": "xpath"
+    "name": "//a[role='tasks']"
+  -
+    "loc_type": "name"
+    "name": "projectInformation.projectName"
+  -
+    "loc_type": "xpath"
+    "name": "//td[title='合同预编号录入']"
+  -
+    "loc_type": "xpath"
+    "name": "//a[span='我的用例']"
+
+input_params:
+  "sendkeys": "合同预编号录入"
+
+expect_output:
+  "loc_type": "xpath"
+  "name": "//*[@class='mini-tab-text']"

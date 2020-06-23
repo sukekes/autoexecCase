@@ -1,0 +1,32 @@
+project_name: "测试业务系统"
+
+base_url: "http://10.215.142.114/LightTower/login"
+
+case_num: "testsuite_001"
+
+case_name: "login_success"
+
+testsuite: "loginpage"
+
+case_description: "用户输入正确的账号、密码后成功登录"
+
+pre_case:
+
+test_step:
+  -
+    "loc_type": "name"
+    "name": "userBase.userName"
+  -
+    "loc_type": "name"
+    "name": "userBase.password"
+  -
+    "loc_type": "id"
+    "name": "submit_button"
+
+input_params:
+  username: "xu_j22"
+  password: "xu_j22@ecidi"
+
+expect_output:
+  "loc_type": "id"
+  "name": "query_btn"

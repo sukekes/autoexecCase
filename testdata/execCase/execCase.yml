@@ -1,0 +1,50 @@
+project_name: "测试业务系统"
+
+base_url: "http://10.215.142.114/LightTower/desktop"
+
+case_num: "testsuite_003"
+
+case_name: "execCase"
+
+testsuite: "execCase"
+
+case_description: "查找并执行用例"
+
+pre_case:
+-
+  "name": "personal_work"
+  "suite": "personalwork"
+
+test_step:
+  -
+    "loc_type": "id"
+    "name": "testcaseCode"
+  -
+    "loc_type": "name"
+    "name": "projectInformation.projectName"
+  -
+    "loc_type": "xpath"
+    "name": "//td[title='合同预编号录入']"
+  -
+    "loc_type": "xpath"
+    "name": "//a[span='我的用例']"
+
+input_params:
+  fault:
+    - "C1"
+    - "C2"
+    - "C11"
+    - "C58"
+    - "C111"
+    - "C115"
+  block:
+    - "C7"
+    - "C8"
+    - "C77"
+    - "C102"
+  sucess:
+    - "C116"
+
+expect_output:
+  "loc_type": "xpath"
+  "name": "//*[@class='mini-tab-text']"
