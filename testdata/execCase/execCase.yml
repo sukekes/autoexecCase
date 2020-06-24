@@ -17,34 +17,52 @@ pre_case:
 
 test_step:
   -
+    # 用例编号查询文板框定位，然后回车查询
     "loc_type": "id"
     "name": "testcaseCode"
   -
-    "loc_type": "name"
-    "name": "projectInformation.projectName"
-  -
+    # 定位需要查询的用例,先随便写一个,查询功能键盘回车
     "loc_type": "xpath"
-    "name": "//td[title='合同预编号录入']"
+    "name": "//td[@title='caseno']"
   -
+    # 找到用例且点击执行
     "loc_type": "xpath"
-    "name": "//a[span='我的用例']"
+    "name": "//td[@title='caseno']/following::td[@title='查看执行']/child::a[text()='执行']"
+  -
+    # Pass
+    "loc_type": "id"
+    "name": "pass"
+  -
+    # noPass
+    "loc_type": "id"
+    "name": "noPass"
+  -
+    # Block
+    "loc_type": "id"
+    "name": "undo"
+  -
+    # 缺陷填报返回
+    "loc_type": "id"
+    "name": "save_defect_return"
+  -
+    # 阻塞返回
+    "loc_type": "id"
+    "name": "goback"
 
 input_params:
   fault:
-    - "C1"
-    - "C2"
-    - "C11"
-    - "C58"
-    - "C111"
-    - "C115"
+    - C1
+    - C2
+    - C11
+    - C58
+    - C111
+    - C115
   block:
-    - "C7"
-    - "C8"
-    - "C77"
-    - "C102"
+    - C7
+    - C8
+    - C77
+    - C102
   sucess:
-    - "C116"
+    - C116
 
 expect_output:
-  "loc_type": "xpath"
-  "name": "//*[@class='mini-tab-text']"

@@ -17,21 +17,21 @@ pre_case:
 
 test_step:
   -
+    # 我的任务
     "loc_type": "xpath"
-    "name": "//a[role='tasks']"
+    "name": "//a[@role='tasks']"
   -
-    "loc_type": "name"
-    "name": "projectInformation.projectName"
-  -
+    # 项目名称
     "loc_type": "xpath"
-    "name": "//td[title='合同预编号录入']"
+    "name": "//td[@title='合同预编号录入']/a"
   -
+    # 我的用例
     "loc_type": "xpath"
-    "name": "//a[span='我的用例']"
+    "name": "//a[@role='tasks-testcases"
 
 input_params:
   "sendkeys": "合同预编号录入"
 
 expect_output:
   "loc_type": "xpath"
-  "name": "//*[@class='mini-tab-text']"
+  "name": "//div[text()='用例编号']"
