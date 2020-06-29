@@ -8,5 +8,6 @@
 import pytest
 
 if __name__ == "__main__":
-    pytest.main(["-m", "tasks", "--pytest_report", "../testreport/report.html","--pytest_title",\
-                 "UI Auto Test Report", "--pytest_desc", "院综合管理信息系统"])
+    # pytest.main(["-m", "tasks", "--pytest_report", "../testreport/report.html","--pytest_title",
+    #              "UI Auto Test Report", "--pytest_desc", "院综合管理信息系统"])
+    pytest.main(["-m", "tasks"])

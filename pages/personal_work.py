@@ -18,13 +18,14 @@ class PersonalWork(BasePage):
     def click_menu(self, loc_type, attr_name):
         self.find_element(eval(loc_type), attr_name).click()
 
-    # 查询我的项目
+    # 项目名称查询
     def query_project(self, loc_type, attr_name, input_params):
-        self.find_element(eval(loc_type), attr_name).sendkeys(input_params)
-        self.find_element(eval(loc_type), attr_name).sendkeys(Keys.ENTER)
+        self.find_element(eval(loc_type), attr_name).send_keys(input_params)
+        self.find_element(eval(loc_type), attr_name).send_keys(Keys.ENTER)
 
     # 点击项目名称
     def click_project(self, loc_type, attr_name):
+        self.refresh()
         self.find_element(eval(loc_type), attr_name).click()
 
     # 点击我的用例

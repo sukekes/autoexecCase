@@ -17,20 +17,20 @@ pre_case:
 
 test_step:
   -
-    # 我的任务
+    # 我的任务0
     "loc_type": "xpath"
     "name": "//a[@role='tasks']"
-  - # 查询项目
+  - # 查询项目1
     "loc_type": "name"
     "name": "projectInformation.projectName"
   -
-    # 项目名称,需要获取输入内容
+    # 项目名称,需要获取输入内容2
     "loc_type": "xpath"
     "name": "//td[@title='projectname']/a"
   -
-    # 我的用例
+    # 我的用例3
     "loc_type": "xpath"
-    "name": "//a[@role='tasks-testcases]"
+    "name": "//a[@role='tasks-testcases']"
 
 input_params:
   "sendkeys": "合同预编号录入"

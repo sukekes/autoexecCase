@@ -16,7 +16,6 @@ def login_by_manager(driver, page, yml):
     login = LoginPage(driver)
     parse.call_pre_case(driver, page, yml)
 
-
     # 确认用户名输入框定位方式，属性值，输入参数
     username_loc = (
         "By." +
@@ -46,8 +45,8 @@ def login_by_manager(driver, page, yml):
 
     # 输入用户名、密码
     login.open()
-    login.type_password(password_loc[0], password_loc[1], password)
     login.type_username(username_loc[0], username_loc[1], username)
+    login.type_password(password_loc[0], password_loc[1], password)
 
     # 登录
     login.submit(btn_loc[0], btn_loc[1])

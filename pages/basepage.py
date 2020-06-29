@@ -37,7 +37,7 @@ class BasePage(object):
             # self.driver.switch_to.window(now_handle)
             self.driver.implicitly_wait(self.timeout)
             self.element = self.driver.find_element(*loc)
-            sleep(2)
+            sleep(0.5)
             logging.info("find the element %s success." % str(loc))
             return self.element
         except NoSuchElementException as error:
@@ -47,17 +47,15 @@ class BasePage(object):
         try:
             # self.driver.switch_to.window(now_handle)
             self.elements = self.driver.find_elements(*loc)
-            sleep(2)
+            sleep(0.5)
             self.driver.implicitly_wait(self.timeout)
             logging.info("find the element %s succeed." % loc)
             return self.elements
         except NoSuchElementException as error:
             logging.erro(error)
 
+    def refresh(self):
+        self.driver.refresh()
 
-
-# if __name__ == "__main__":
-#     basepage = BasePage()
-#     basepage.open("http://oa.simulate.com:8080/systemcenter/theme/newecidi/loginform.html")
 
 

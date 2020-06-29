@@ -17,19 +17,17 @@ driver.find_element(By.ID, "submit_button").click()
 
 # 进入我的用例页面
 driver.find_element(By.XPATH, "//a[@role='tasks']").click()
-
+sleep(2)
 driver.find_element(By.NAME, "projectInformation.projectName").send_keys("合同预编号录入")
 driver.find_element(By.NAME, "projectInformation.projectName").send_keys(Keys.ENTER)
-sleep(5)
-
+sleep(3)
 driver.find_element(By.XPATH, "//td[@title='合同预编号录入']/a").click()
-
+sleep(2)
 driver.find_element(By.XPATH, "//a[@role='tasks-testcases']").click()
-
-driver.find_element(By.XPATH, "//div[text()='用例编号']")
-
+sleep(2)
+driver.find_element(By.XPATH, "//div[text()='用例编号']").click()
+sleep(2)
 driver.find_element(By.XPATH, "//td[@title='C115']/following::td[@title='查看执行']/child::a[text()='执行']").click()
-
 sleep(5)
 
 driver.quit()

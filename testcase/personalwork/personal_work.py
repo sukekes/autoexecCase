@@ -57,7 +57,3 @@ def personal_work(driver, page, yml):
 
     return form_type
 
-
-if __name__ == "__main__":
-    driver = webdriver.Chrome()
-    personal_work(driver, "personalwork", "personal_work")

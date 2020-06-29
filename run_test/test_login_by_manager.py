@@ -9,7 +9,7 @@ from selenium import webdriver
 from testcase.loginpage.login_by_manager import login_by_manager
 
 
-@pytest.mark.tasks
+# @pytest.mark.tasks
 def test_login_by_manager():
     driver = webdriver.Chrome()
     expect = login_by_manager(driver, "loginpage", "login_by_manager")

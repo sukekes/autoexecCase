@@ -4,48 +4,47 @@ base_url: "http://10.215.142.114/LightTower/desktop"
 
 case_num: "testsuite_003"
 
-case_name: "execCase"
+case_name: "execc"
 
-testsuite: "execCase"
+testsuite: "execc"
 
 case_description: "查找并执行用例"
 
 pre_case:
+-
+  "name": "login_by_manager"
+  "suite": "loginpage"
 -
   "name": "personal_work"
   "suite": "personalwork"
 
 test_step:
   -
-    # 用例编号查询文板框定位，然后回车查询
+    # 用例编号查询文板框定位，然后回车查询 0
     "loc_type": "id"
     "name": "testcaseCode"
   -
-    # 定位需要查询的用例,先随便写一个,查询功能键盘回车
-    "loc_type": "xpath"
-    "name": "//td[@title='caseno']"
-  -
-    # 找到用例且点击执行
+    # 找到用例且点击执行 1
     "loc_type": "xpath"
     "name": "//td[@title='caseno']/following::td[@title='查看执行']/child::a[text()='执行']"
   -
-    # Pass
+    # Pass 2
     "loc_type": "id"
     "name": "pass"
   -
-    # noPass
+    # noPass 3
     "loc_type": "id"
     "name": "noPass"
   -
-    # Block
+    # Block 4
     "loc_type": "id"
     "name": "undo"
   -
-    # 缺陷填报返回
+    # 缺陷填报返回 5
     "loc_type": "id"
     "name": "save_defect_return"
   -
-    # 阻塞返回
+    # 阻塞返回 6
     "loc_type": "id"
     "name": "goback"
 
@@ -66,3 +65,5 @@ input_params:
     - C116
 
 expect_output:
+  "loc_type": "xpath"
+  "name": "//span[text()='请选择版本：']"

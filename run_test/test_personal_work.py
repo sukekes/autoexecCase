@@ -9,7 +9,6 @@ from selenium import webdriver
 from testcase.personalwork.personal_work import personal_work
 
 
-@pytest.mark.tasks
 def test_personal_work():
     driver = webdriver.Chrome()
     expect = personal_work(driver, "personalwork", "personal_work")
