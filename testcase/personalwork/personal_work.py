@@ -16,17 +16,23 @@ def personal_work(driver, page, yml):
     parse = Parse()
     parse.call_pre_case(driver, page, yml)
 
-    # 确认个人办公菜单定位方式，属性名称
+    # 确认我的任务菜单定位方式，属性内容
     menu_lock = "By." + str.upper(parse.data['test_step'][0]["loc_type"])
     menu_attr_name = parse.data["test_step"][0]["name"]
 
-    # 确认网上表单定位方式，属性值，输入参数
-    webform_loc = "By." + str.upper(parse.data["test_step"][1]["loc_type"])
-    webform_attr_name = parse.data["test_step"][1]["name"]
+    # 确认查询文本框定位方式、属性内容
+    query_loc = "By." + str.upper(parse.data["test_step"][1]["loc_type"])
+    query_attr_name = parse.data["test_step"][1]["name"]
+    input_params = parse.data['input_params']['sendkeys']
 
-    # 确认登录按钮定位方式，属性值
-    webform_manager_loc = "By." + str.upper(parse.data['test_step'][2]["loc_type"])
-    webform_manager_attr_name = parse.data["test_step"][2]["name"]
+    # 确认项目列表中查询项目的定位方式，属性内容
+    project_loc = "By." + str.upper(parse.data['test_step'][2]["loc_type"])
+    project_attr_name = (parse.data["test_step"][2]["name"]).replace(
+        "projectname", input_params)
+
+    # 我的用例
+    my_case_loc = "By." + str.upper(parse.data['test_step'][3]["loc_type"])
+    my_case_attr_name = parse.data["test_step"][3]["name"]
 
     # 确认预期结果定位方式、属性值
     expect_loc = "By." + str.upper(parse.data["expect_output"]["loc_type"])
@@ -38,8 +44,9 @@ def personal_work(driver, page, yml):
     # 此处不需要再次打开一个窗口
     # person.open()
     person.click_menu(menu_lock, menu_attr_name)
-    person.click_web_form(webform_loc, webform_attr_name)
-    person.click_form_manager(webform_manager_loc, webform_manager_attr_name)
+    person.query_project(query_loc, query_attr_name, input_params)
+    person.click_project(project_loc, project_attr_name)
+    person.click_my_case(my_case_loc, my_case_attr_name)
 
     # 获取当前窗口句柄并切换到最新打开的窗口
     # windows = driver.window_handles

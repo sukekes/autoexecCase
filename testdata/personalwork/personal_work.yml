@@ -20,14 +20,17 @@ test_step:
     # 我的任务
     "loc_type": "xpath"
     "name": "//a[@role='tasks']"
+  - # 查询项目
+    "loc_type": "name"
+    "name": "projectInformation.projectName"
   -
-    # 项目名称
+    # 项目名称,需要获取输入内容
     "loc_type": "xpath"
-    "name": "//td[@title='合同预编号录入']/a"
+    "name": "//td[@title='projectname']/a"
   -
     # 我的用例
     "loc_type": "xpath"
-    "name": "//a[@role='tasks-testcases"
+    "name": "//a[@role='tasks-testcases]"
 
 input_params:
   "sendkeys": "合同预编号录入"

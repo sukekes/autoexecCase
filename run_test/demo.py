@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from time import sleep
 
 
@@ -9,11 +10,17 @@ driver.get("http://10.215.142.114/LightTower/login")
 driver.implicitly_wait(5)
 
 driver.maximize_window()
-driver.find_element(By.NAME, "userBase.userName").send_keys("username")
-driver.find_element(By.NAME, "userBase.password").send_keys("password")
+# 登录
+driver.find_element(By.NAME, "userBase.userName").send_keys("xu_j22")
+driver.find_element(By.NAME, "userBase.password").send_keys("xu_j22@ecidi")
 driver.find_element(By.ID, "submit_button").click()
 
+# 进入我的用例页面
 driver.find_element(By.XPATH, "//a[@role='tasks']").click()
+
+driver.find_element(By.NAME, "projectInformation.projectName").send_keys("合同预编号录入")
+driver.find_element(By.NAME, "projectInformation.projectName").send_keys(Keys.ENTER)
+sleep(5)
 
 driver.find_element(By.XPATH, "//td[@title='合同预编号录入']/a").click()
 

@@ -14,7 +14,7 @@ from time import sleep
 class Parse(object):
     def __init__(self):
         self.data = dict()
-        self.base_path = os.getcwd()[:os.getcwd().find("autoexecCase") + 10]
+        self.base_path = os.getcwd()[:os.getcwd().find("autoexecCase") + 12]
     # data = dict()
 
     def yml_parse(self, page, name):

@@ -24,8 +24,8 @@ test_step:
     "name": "submit_button"
 
 input_params:
-  username: "username"
-  password: "password"
+  username: "xu_j22"
+  password: "xu_j22@ecidi"
 
 expect_output:
   "loc_type": "xpath"
