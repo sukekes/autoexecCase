@@ -12,9 +12,6 @@ case_description: "查找并执行用例"
 
 pre_case:
 -
-  "name": "login_by_manager"
-  "suite": "loginpage"
--
   "name": "personal_work"
   "suite": "personalwork"
 
@@ -48,19 +45,17 @@ test_step:
     "loc_type": "id"
     "name": "goback"
 
+  - # 切换分页 7
+    "loc_type": "xpath"
+    "name": "//td[@id='next_testcase_jqgrid_pager']"
+  - # 执行页面用例编号 8
+    "loc_type": "id"
+    "name": "code"
 input_params:
   fault:
-    - C1
-    - C2
-    - C11
-    - C58
-    - C111
-    - C115
+    - C3
   block:
-    - C7
-    - C8
-    - C77
-    - C102
+    - C11
   sucess:
     - C116
 

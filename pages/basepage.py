@@ -57,5 +57,8 @@ class BasePage(object):
     def refresh(self):
         self.driver.refresh()
 
+    def executejs(self, js):
+        self.driver.execute_script(js)
+
 
 

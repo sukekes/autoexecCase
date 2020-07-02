@@ -8,9 +8,14 @@ import pytest
 from selenium import webdriver
 from testcase.execcase import exec_case
 
+
 @pytest.mark.tasks
 def test_exec_case():
-    driver = webdriver.Chrome()
-    expect = exec_case(driver, "execc", "execc")
+    try:
+        driver = webdriver.Chrome()
+        expect = exec_case(driver, "execc", "execc")
 
-    assert expect
+        assert expect
+    finally:
+        driver.quit()
+

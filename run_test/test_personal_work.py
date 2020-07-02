@@ -11,6 +11,6 @@ from testcase.personalwork.personal_work import personal_work
 
 def test_personal_work():
     driver = webdriver.Chrome()
-    expect = personal_work(driver, "personalwork", "personal_work")
-    assert expect
+    anticipation = personal_work(driver, "personalwork", "personal_work")
+    assert anticipation
     driver.quit()
