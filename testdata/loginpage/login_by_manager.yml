@@ -1,6 +1,6 @@
 project_name: "测试业务系统"
 
-base_url: "http://10.215.142.114/LightTower/login"
+base_url: "url"
 
 case_num: "testsuite_001"
 
@@ -24,8 +24,8 @@ test_step:
     "name": "submit_button"
 
 input_params:
-  username: "xu_j22"
-  password: "xu_j22@ecidi"
+  username: "username"
+  password: "password"
 
 expect_output:
   "loc_type": "xpath"
