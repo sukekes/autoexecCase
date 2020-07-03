@@ -22,7 +22,7 @@ class ExecCase(BasePage):
 
     # 进入执行用例页面
     def enter_exec_page(self, loc_type, attr_name):
-        self.refresh()
+        # self.refresh()
         self.find_element(eval(loc_type), attr_name).click()
 
     # 执行用例
@@ -41,7 +41,7 @@ class ExecCase(BasePage):
         self.find_element(eval(loc_type), attr_name).click()
 
     def next_page(self, loc_type, attr_name):
-        self.refresh()
+        # self.refresh()
         self.find_element(eval(loc_type), attr_name).click()
 
     def get_expect(self, loc_type, attr_name):

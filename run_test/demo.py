@@ -39,6 +39,7 @@ driver.find_element(By.XPATH, "//a[@role='tasks-testcases']").click()
 # driver.quit()
 
 a = driver.find_element(By.XPATH, "//span[text()='请选择版本：']")
+driver.find_element(By.XPATH, "//td[@id='next_testcase_jqgrid_pager']").click()
 print(a)
 sleep(5)
 driver.quit()

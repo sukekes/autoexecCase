@@ -68,41 +68,43 @@ def exec_case(driver, page, yml):
     pass_case = parse.data["input_params"]["sucess"][0]
     js = "var q=document.documentElement.scrollTop=1000"
     # 没有加非空判断
-    for fault in fault_cases:
-        fault_case = False
-        fault_case_no = exec_span_attr_name.replace("caseno", fault)
-        execc.query_case(query_loc, query_attr_name, fault)
-        while (not fault_case):
-            try:
-                execc.enter_exec_page(exec_span_loc, fault_case_no)
-                # execc.executejs(js)
-                fault_case = True
-            except:
-                execc.next_page(next_page_loc, next_page_attr_name)
-        # execc.executejs(js)
-        execc.exec_case(fault_loc, fault_attr_name)
-        execc.back_from_issue(back_from_issue_loc, back_from_issue_attr_name)
-        logging.info("executed the case No. %s to Fail" % fault)
-    logging.info("executed the Fail Cases %s" % fault_cases)
+    if fault_cases is not None:
+        for fault in fault_cases:
+            fault_case = False
+            fault_case_no = exec_span_attr_name.replace("caseno", fault)
+            execc.query_case(query_loc, query_attr_name, fault)
+            while (not fault_case):
+                try:
+                    execc.enter_exec_page(exec_span_loc, fault_case_no)
+                    # execc.executejs(js)
+                    fault_case = True
+                except:
+                    execc.next_page(next_page_loc, next_page_attr_name)
+            # execc.executejs(js)
+            execc.exec_case(fault_loc, fault_attr_name)
+            execc.back_from_issue(back_from_issue_loc, back_from_issue_attr_name)
+            logging.info("executed the case No. %s to Fail" % fault)
+        logging.info("executed the Fail Cases %s" % fault_cases)
 
     # 没有加非空判断
-    for block in block_cases:
-        execc.query_case(query_loc, query_attr_name, block)
-        block_case = True
-        block_case_no = exec_span_attr_name.replace("caseno", block)
-        while (block_case):
-            try:
-                execc.enter_exec_page(exec_span_loc, block_case_no)
-                block_case = False
-            except:
-                execc.next_page(next_page_loc, next_page_attr_name)
-                # execc.executejs(js)
-        # execc.executejs(js)
-        execc.exec_case(block_loc, block_attr_name)
-        execc.back_from_issue(back_from_exec_loc, back_from_exec_attr_name)
-        logging.info("executed the case No. %s to Block" % block)
+    if block_cases is not None:
+        for block in block_cases:
+            execc.query_case(query_loc, query_attr_name, block)
+            block_case = True
+            block_case_no = exec_span_attr_name.replace("caseno", block)
+            while (block_case):
+                try:
+                    execc.enter_exec_page(exec_span_loc, block_case_no)
+                    block_case = False
+                except:
+                    execc.next_page(next_page_loc, next_page_attr_name)
+                    # execc.executejs(js)
+            # execc.executejs(js)
+            execc.exec_case(block_loc, block_attr_name)
+            execc.back_from_issue(back_from_exec_loc, back_from_exec_attr_name)
+            logging.info("executed the case No. %s to Block" % block)
 
-    logging.info("executed the Block Cases %s" % block_cases)
+        logging.info("executed the Block Cases %s" % block_cases)
 
     execc.query_case(query_loc, query_attr_name, pass_case)
     case_no = exec_span_attr_name.replace("caseno", pass_case)

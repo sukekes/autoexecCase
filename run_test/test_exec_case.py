@@ -6,16 +6,13 @@
 # @Blog    ：https://www.cnblogs.com/xjin/
 import pytest
 from selenium import webdriver
-from testcase.execcase import exec_case
+from testcase.execcase.exec_case import exec_case
 
 
 @pytest.mark.tasks
 def test_exec_case():
-    try:
-        driver = webdriver.Chrome()
-        expect = exec_case(driver, "execc", "execc")
-
-        assert expect
-    finally:
-        driver.quit()
+    driver = webdriver.Chrome()
+    anticipation = exec_case(driver, "execc", "execc")
+    assert anticipation
+    driver.quit()
 
