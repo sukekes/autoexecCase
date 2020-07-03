@@ -126,8 +126,8 @@ def exec_case(driver, page, yml):
     return result
 
 
-if __name__ == "__main__":
-    driver = webdriver.Chrome()
-    anticipation = exec_case(driver, "execc", "execc")
-    assert anticipation
-    driver.quit()
+# if __name__ == "__main__":
+#     driver = webdriver.Chrome()
+#     anticipation = exec_case(driver, "execc", "execc")
+#     assert anticipation
+#     driver.quit()
