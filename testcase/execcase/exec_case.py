@@ -113,15 +113,13 @@ def exec_case(driver, page, yml):
     result = False
     while (not result):
        try:
-           # sleep(2)
+           execc.exec_case(pass_loc, pass_attr_name)
+
+       except:
            execc.get_expect(expect_loc, expect_attr_name)
            result = True
+           logging.info("Completed execute TestCase!")
            break
-       except:
-           sleep(2)
-           execc.refresh()
-           # execc.executejs(js)
-           execc.exec_case(pass_loc, pass_attr_name)
 
     return result
 
@@ -130,3 +128,4 @@ if __name__ == "__main__":
     driver = webdriver.Chrome()
     anticipation = exec_case(driver, "execc", "execc")
     assert anticipation
+    driver.quit()

@@ -18,7 +18,7 @@ class BasePage(object):
         self.pre_case = False
         self.base_url = "http://10.215.142.114/LightTower/login"
         self.driver = driver
-        self.timeout = 30
+        self.timeout = 10
 
     # protected mthod
     def _open(self):
@@ -37,7 +37,7 @@ class BasePage(object):
             # self.driver.switch_to.window(now_handle)
             self.driver.implicitly_wait(self.timeout)
             self.element = self.driver.find_element(*loc)
-            sleep(0.5)
+            sleep(1)
             logging.info("find the element %s success." % str(loc))
             return self.element
         except NoSuchElementException as error:

@@ -47,17 +47,20 @@ test_step:
 
   - # 切换分页 7
     "loc_type": "xpath"
-    "name": "//td[@id='next_testcase_jqgrid_pager']"
+    "name": "//span[@class='ui-icon ui-icon-seek-next']"
+    # "name": "//td[@id='next_testcase_jqgrid_pager']"
   - # 执行页面用例编号 8
     "loc_type": "id"
     "name": "code"
 input_params:
   fault:
+    - C1
     - C3
   block:
     - C11
+    - C12
   sucess:
-    - C116
+    - C15
 
 expect_output:
   "loc_type": "xpath"
