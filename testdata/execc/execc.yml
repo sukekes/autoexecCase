@@ -1,6 +1,6 @@
 project_name: "测试业务系统"
 
-base_url: "http://10.215.142.114/LightTower/desktop"
+base_url: "url"
 
 case_num: "testsuite_003"
 
