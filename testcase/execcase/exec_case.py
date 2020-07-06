@@ -76,11 +76,9 @@ def exec_case(driver, page, yml):
             while (not fault_case):
                 try:
                     execc.enter_exec_page(exec_span_loc, fault_case_no)
-                    # execc.executejs(js)
                     fault_case = True
                 except:
                     execc.next_page(next_page_loc, next_page_attr_name)
-            # execc.executejs(js)
             execc.exec_case(fault_loc, fault_attr_name)
             execc.back_from_issue(back_from_issue_loc, back_from_issue_attr_name)
             logging.info("executed the case No. %s to Fail" % fault)
@@ -98,10 +96,11 @@ def exec_case(driver, page, yml):
                     block_case = False
                 except:
                     execc.next_page(next_page_loc, next_page_attr_name)
-                    # execc.executejs(js)
-            # execc.executejs(js)
             execc.exec_case(block_loc, block_attr_name)
-            execc.back_from_issue(back_from_exec_loc, back_from_exec_attr_name)
+            try:
+                execc.back_from_issue(back_from_exec_loc, back_from_exec_attr_name)
+            except:
+                logging.info("back to my case list.")
             logging.info("executed the case No. %s to Block" % block)
 
         logging.info("executed the Block Cases %s" % block_cases)
@@ -109,14 +108,14 @@ def exec_case(driver, page, yml):
     execc.query_case(query_loc, query_attr_name, pass_case)
     case_no = exec_span_attr_name.replace("caseno", pass_case)
     execc.enter_exec_page(exec_span_loc, case_no)
-    execc.executejs(js)
     execc.exec_case(pass_loc, pass_attr_name)
-    # logging.info("executed the case No. %s to Pass." % execc.find_element(code_num_loc, code_num_attr_name).text)
+    logging.info("executed the case %s to Pass." % pass_case)
     result = False
     while (not result):
        try:
+           code_value = execc.execute_script("return document.getElementById('code').value")
            execc.exec_case(pass_loc, pass_attr_name)
-
+           logging.info("executed the case %s to Pass." % code_value)
        except:
            execc.get_expect(expect_loc, expect_attr_name)
            result = True
@@ -126,8 +125,8 @@ def exec_case(driver, page, yml):
     return result
 
 
-# if __name__ == "__main__":
-#     driver = webdriver.Chrome()
-#     anticipation = exec_case(driver, "execc", "execc")
-#     assert anticipation
-#     driver.quit()
+if __name__ == "__main__":
+    driver = webdriver.Chrome()
+    anticipation = exec_case(driver, "execc", "execc")
+    assert anticipation
+    driver.quit()

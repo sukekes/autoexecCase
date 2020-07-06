@@ -54,13 +54,13 @@ test_step:
     "name": "code"
 input_params:
   fault:
-    - C1
-    - C3
+#    - C10
+#    - C11
   block:
-    - C11
-    - C12
+#    - C13
+#    - C7
   sucess:
-    - C15
+    - C156
 
 expect_output:
   "loc_type": "xpath"
