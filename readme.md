@@ -62,5 +62,10 @@ sleep(2)
 
 2、当前未提供选择版本功能，默认执行最新版本的用例
 
+3、执行execute_script返回None，暂未解决
+~~~
+code_value = execc.execute_script("return document.getElementById('code').value")
+~~~
+
 ## 框架代码结构、依赖环境
 相关内容参见：[PageObject实例](https://github.com/sukekes/autotestUI)
