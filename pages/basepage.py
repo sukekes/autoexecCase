@@ -16,7 +16,7 @@ class BasePage(object):
         self.element = None
         self.elements = None
         self.pre_case = False
-        self.base_url = "http://10.215.142.114/LightTower/login"
+        self.base_url = "url"
         self.driver = driver
         self.timeout = 10
 
