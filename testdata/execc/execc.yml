@@ -54,11 +54,11 @@ test_step:
     "name": "code"
 input_params:
   fault:
-#    - C10
-#    - C11
+    - C10
+    - C11
   block:
-#    - C13
-#    - C7
+    - C13
+    - C7
   sucess:
     - C156
 
