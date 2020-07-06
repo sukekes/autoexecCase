@@ -12,13 +12,13 @@ options.add_argument('--headless')
 
 driver = webdriver.Chrome()
 
-driver.get("http://10.215.142.114/LightTower/login")
+driver.get("url")
 driver.implicitly_wait(15)
 
 driver.maximize_window()
 # 登录
-driver.find_element(By.NAME, "userBase.userName").send_keys("xu_j22")
-driver.find_element(By.NAME, "userBase.password").send_keys("xu_j22@ecidi")
+driver.find_element(By.NAME, "userBase.userName").send_keys("username")
+driver.find_element(By.NAME, "userBase.password").send_keys("password")
 driver.find_element(By.ID, "submit_button").click()
 
 # 进入我的用例页面
