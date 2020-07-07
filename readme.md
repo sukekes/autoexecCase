@@ -4,7 +4,7 @@
 登录系统进入进入我的任务--用例执行页面，执行测试用例。先查找失败的用例执行，再查找阻塞的用例执行，最后执行通过的用例。
 
 ## 运行脚本步骤
-### 1、打开pages/basepage,修改base_url
+### 1、打开pages/basepage.py ，修改base_url
 ~~~
 self.base_url = "测试业务系统URL"
 ~~~
