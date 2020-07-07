@@ -4,20 +4,24 @@
 登录系统进入进入我的任务--用例执行页面，执行测试用例。先查找失败的用例执行，再查找阻塞的用例执行，最后执行通过的用例。
 
 ## 运行脚本步骤
-### 1、打开testdate/loginpage/login_by_manager.yml文件
+### 1、打开pages/basepage,修改base_url
+~~~
+self.base_url = "测试业务系统URL"
+~~~
+### 2、打开testdate/loginpage/login_by_manager.yml文件
 在input_params下输入用户名、密码
 ~~~
 input_params:
   username: "用户名"
   password: "密码"
 ~~~
-### 2、打开testdata/personalwork/personal_work.yml文件
+### 3、打开testdata/personalwork/personal_work.yml文件
 在input_params下输入项目名称
 ~~~
 input_params:
   "sendkeys": "项目名称"
 ~~~
-### 3、打开testdata/execc/execc.yml文件
+### 4、打开testdata/execc/execc.yml文件
 在input_params下分别输入执行失败、阻塞、通过的用例编号。其中失败、阻塞的用例编号需要全部列出，通过的用例只需要列出用例编号最大值即可。
 例如共计150条用例，从第141条用例开始是测试通过的，则通过用例只需要列出C141即可。
 ~~~
@@ -31,7 +35,7 @@ input_params:
   sucess:
     - C116
 ~~~
-### 4、执行run_test/run.py脚本
+### 5、执行run_test/run.py脚本
 ~~~
 if __name__ == "__main__":
     pytest.main(["-m", "tasks"])
