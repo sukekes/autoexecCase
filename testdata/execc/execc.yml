@@ -1,0 +1,40 @@
+base_url: url
+case_description: 查找并执行用例
+case_name: execc
+case_num: testsuite_003
+expect_output:
+  loc_type: xpath
+  name: //span[text()='请选择版本：']
+input_params:
+  block:
+  - C331
+  - C330
+  fault:
+  - C333
+  - C332
+  success:
+  - C220
+pre_case:
+- name: personal_work
+  suite: personalwork
+project_name: 测试业务系统
+test_step:
+- loc_type: id
+  name: testcaseCode
+- loc_type: xpath
+  name: //td[@title='caseno']/following::td[@title='查看执行']/child::a[text()='执行']
+- loc_type: id
+  name: pass
+- loc_type: id
+  name: noPass
+- loc_type: id
+  name: undo
+- loc_type: id
+  name: save_defect_return
+- loc_type: id
+  name: goback
+- loc_type: xpath
+  name: //span[@class='ui-icon ui-icon-seek-next']
+- loc_type: id
+  name: code
+testsuite: execc

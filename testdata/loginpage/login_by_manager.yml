@@ -1,0 +1,20 @@
+base_url: url
+case_description: 用户输入正确的账号、密码后成功登录
+case_name: login_success
+case_num: testsuite_001
+expect_output:
+  loc_type: xpath
+  name: //a[@role='desktop']
+input_params:
+  password: xu_j22@ecidi
+  username: xu_j22
+pre_case: null
+project_name: 测试业务系统
+test_step:
+- loc_type: name
+  name: userBase.userName
+- loc_type: name
+  name: userBase.password
+- loc_type: id
+  name: submit_button
+testsuite: loginpage
