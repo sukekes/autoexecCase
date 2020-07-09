@@ -9,6 +9,7 @@ from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from common.log import logging
 
 
 class ExecCase(BasePage):
@@ -41,11 +42,16 @@ class ExecCase(BasePage):
         self.find_element(eval(loc_type), attr_name).click()
 
     def next_page(self, loc_type, attr_name):
-        # self.refresh()
         self.find_element(eval(loc_type), attr_name).click()
 
     def get_expect(self, loc_type, attr_name):
         self.find_element(eval(loc_type), attr_name).click()
+
+    # def find(self, loc_type, attr_name):
+    #     try:
+    #         is_enable = self.find_element(eval(loc_type), attr_name)
+    #     except Exception as e:
+    #         logging.error("Not Found the Element")
 
 
 

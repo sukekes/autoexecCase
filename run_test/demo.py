@@ -12,8 +12,8 @@ options.add_argument('--headless')
 options.add_argument('--disable-gpu')
 options.add_argument('--window-size=1920,1080')
 
-driver = webdriver.Chrome(chrome_options=options)
-
+# driver = webdriver.Chrome(chrome_options=options)
+driver = webdriver.Chrome()
 driver.get("http://10.215.142.114/LightTower/login")
 driver.implicitly_wait(15)
 
@@ -34,7 +34,7 @@ sleep(2)
 driver.find_element(By.XPATH, "//a[@role='tasks-testcases']").click()
 # driver.find_element(By.XPATH, "//div[text()='用例编号']").click()
 
-driver.find_element(By.XPATH, "//td[@title='C419']/following::td[@title='查看执行']/child::a[text()='执行']").click()
+# driver.find_element(By.XPATH, "//td[@title='C419']/following::td[@title='查看执行']/child::a[text()='执行']").click()
 
 # a = EC.presence_of_element_located("//td[@title='C198']")
 # try:
@@ -51,10 +51,11 @@ driver.find_element(By.XPATH, "//td[@title='C419']/following::td[@title='查看�
 # driver.refresh()
 # driver.find_element(By.ID, "pass").click()
 sleep(2)
-a = driver.execute_script("return document.getElementById('code').value")
-b = driver.find_element(By.ID, "code").text
-print(a)
-print(b)
+# a = driver.execute_script("return document.getElementById('code').value")
+# b = driver.find_element(By.ID, "code").text
+a = driver.find_element(By.XPATH, "//span[@class='ui-icon ui-icon-seek-next']")
+
+print(a.is_enabled())
 # a = driver.find_element(By.ID, "code")
 # print(a.value_of_css_property("code"))
 driver.quit()

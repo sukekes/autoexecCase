@@ -12,6 +12,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.common.exceptions import NoSuchElementException, InvalidArgumentException
 from time import sleep
 import yaml
 import getpass
@@ -71,18 +72,25 @@ def exec_case(driver, page, yml):
     block_cases = parse.data["input_params"]["block"]
     pass_case = parse.data["input_params"]["success"][0]
     js = "var q=document.documentElement.scrollTop=1000"
-    # 没有加非空判断
+    # 非空判断
     if fault_cases is not None:
         for fault in fault_cases:
             fault_case = False
             fault_case_no = exec_span_attr_name.replace("caseno", fault)
             execc.query_case(query_loc, query_attr_name, fault)
-            while (not fault_case):
+            while not fault_case:
                 try:
                     execc.enter_exec_page(exec_span_loc, fault_case_no)
                     fault_case = True
-                except:
+                except Exception as e:
+                    logging.error(e)
                     execc.next_page(next_page_loc, next_page_attr_name)
+                    # if execc.find(next_page_loc, next_page_attr_name).is_enable():
+                    #     execc.next_page(next_page_loc, next_page_attr_name)
+                    # else:
+                    #     logging.info("the case %s is not found. please check your input params and rerun the script."
+                    #                  % fault)
+                    #     break
             execc.exec_case(fault_loc, fault_attr_name)
             execc.back_from_issue(back_from_issue_loc, back_from_issue_attr_name)
             logging.info("executed the case No. %s to Fail" % fault)
@@ -94,12 +102,20 @@ def exec_case(driver, page, yml):
             execc.query_case(query_loc, query_attr_name, block)
             block_case = True
             block_case_no = exec_span_attr_name.replace("caseno", block)
-            while (block_case):
+            while block_case:
                 try:
                     execc.enter_exec_page(exec_span_loc, block_case_no)
                     block_case = False
-                except:
+                except (NoSuchElementException, InvalidArgumentException, AttributeError) as e:
+                    logging.error(e)
                     execc.next_page(next_page_loc, next_page_attr_name)
+                    # enable = execc.find_element(next_page_loc, next_page_attr_name)
+                    # if enable.is_enable():
+                    #
+                    # else:
+                    #     logging.info("the case %s is not found. please check your input params and rerun the script."
+                    #                  % block)
+                    #     break
             execc.exec_case(block_loc, block_attr_name)
             try:
                 execc.back_from_issue(back_from_exec_loc, back_from_exec_attr_name)
@@ -129,64 +145,108 @@ def exec_case(driver, page, yml):
     return result
 
 
+def input_handle(content):
+    a = input(content)
+    if len(a) == 0:
+        a = None
+    else:
+        a = list(a.split(","))
+    return a
+
+
+def is_empty(content):
+    while True:
+        b = input(content)
+        if len(b) == 0:
+            logging.info("您输入内容为空，请重新输入:")
+            sleep(0.05)
+        else:
+            break
+    return b
+
+
+def modify_yml(file, **kwargs):
+    try:
+        with open(file, "r", encoding="utf-8") as read_file:
+            data = yaml.full_load(read_file.read())
+            for key in kwargs:
+                data['input_params'][key] = kwargs[key]
+            read_file.close()
+        with open(file, "w", encoding="utf-8") as write_file:
+            # allow_unicode 解决中文乱码问题
+            yaml.dump(data, write_file, allow_unicode=True, default_flow_style=False)
+        write_file.close()
+    except Exception as e:
+        raise e
+
+
 # 封装成exe使用
 if __name__ == "__main__":
     parse_pre = Parse()
     parse_pre.yml_parse("loginpage", "login_by_manager")
     # 配置项目名称，用例
     if parse_pre.data['input_params']['username'] is None or parse_pre.data['input_params']['password'] is None:
-        username = input("请输入用户名：")
-        password = input("请输入密码：")
-    project_name = input("请输入项目全称：")
-    fault_cases = list(input("请输入执行失败的用例编号，以逗号隔开（请注意区分中英文字符）：").split(","))
-    block_cases = list(input("请输入执行阻塞的用例编号，以逗号隔开（请注意区分中英文字符）：").split(","))
-    pass_cases = input("请输入执行通过case中最大的编号：")
+        username = is_empty("请输入用户名：")
+        password = is_empty("请输入密码：")
+    project_name = is_empty("请输入项目全称：")
+    fault_cases = input_handle("请输入执行失败的用例编号，以逗号隔开（请注意区分中英文字符）：")
+    block_cases = input_handle("请输入执行阻塞的用例编号，以逗号隔开（请注意区分中英文字符）：")
+    pass_cases = is_empty("请输入执行通过case中最大的编号：")
 
     # read login yaml
     if parse_pre.data['input_params']['username'] is None or parse_pre.data['input_params']['password'] is None:
         # 打包使用
         # with open("./testdata/loginpage/login_by_manager.yml", "r", encoding="utf-8") as read_login_file:
         # 直接执行
-        with open("../../testdata/loginpage/login_by_manager.yml", "r", encoding="utf-8") as read_login_file:
-            login_data = yaml.full_load(read_login_file.read())
-            # print("赋值前" + data['input_params']['username'])
-            login_data['input_params']['username'] = username
-            login_data['input_params']['password'] = password
-        read_login_file.close()
-        # write login yaml
-        with open("../../testdata/loginpage/login_by_manager.yml", "w", encoding="utf-8") as write_login_file:
-            # allow_unicode 解决中文乱码问题
-            yaml.dump(login_data, write_login_file, allow_unicode=True, default_flow_style=False)
-        write_login_file.close()
-
-    # read personal work yaml
-    with open("../../testdata/personalwork/personal_work.yml", "r", encoding="utf-8") as read_personal_work:
-        personal_work_data = yaml.full_load(read_personal_work.read())
-        personal_work_data['input_params']['sendkeys'] = project_name
-    read_personal_work.close()
+        user_info = {"username": username, "password": password}
+        modify_yml("./testdata/loginpage/login_by_manager.yml", username=username,password=password)
+    #     with open("../../testdata/loginpage/login_by_manager.yml", "r", encoding="utf-8") as read_login_file:
+    #         login_data = yaml.full_load(read_login_file.read())
+    #         # print("赋值前" + data['input_params']['username'])
+    #         login_data['input_params']['username'] = username
+    #         login_data['input_params']['password'] = password
+    #     read_login_file.close()
+    #     # write login yaml
+    #     with open("../../testdata/loginpage/login_by_manager.yml", "w", encoding="utf-8") as write_login_file:
+    #         # allow_unicode 解决中文乱码问题
+    #         yaml.dump(login_data, write_login_file, allow_unicode=True, default_flow_style=False)
+    #     write_login_file.close()
+    #
+    project_info = {"sendkeys": project_name}
+    modify_yml("./testdata/personalwork/personal_work.yml", sendkeys=project_name)
+    # # read personal work yaml
+    # with open("../../testdata/personalwork/personal_work.yml", "r", encoding="utf-8") as read_personal_work:
+    #     personal_work_data = yaml.full_load(read_personal_work.read())
+    #     personal_work_data['input_params']['sendkeys'] = project_name
+    # read_personal_work.close()
     # write personal work yaml
-    with open("../../testdata/personalwork/personal_work.yml", "w", encoding="utf-8") as write_personal_work:
-        yaml.dump(personal_work_data, write_personal_work, allow_unicode=True, default_flow_style=False)
-    write_personal_work.close()
+    # with open("../../testdata/personalwork/personal_work.yml", "w", encoding="utf-8") as write_personal_work:
+    #     yaml.dump(personal_work_data, write_personal_work, allow_unicode=True, default_flow_style=False)
+    # write_personal_work.close()
 
     # read execute case yaml
-    with open("../../testdata/execc/execc.yml", "r", encoding="utf-8") as read_exec_file:
+    with open("./testdata/execc/execc.yml", "r", encoding="utf-8") as read_exec_file:
         exec_case_data = yaml.full_load(read_exec_file.read())
-        for i in range(len(fault_cases)):
-            exec_case_data['input_params']['fault'][i] = fault_cases[i]
-            i += 1
-        for i in range(len(block_cases)):
-            exec_case_data['input_params']['block'][i] = block_cases[i]
-            i += 1
+        if fault_cases is not None:
+            # 清除原有数据
+            exec_case_data['input_params']['fault'] = list()
+            for i in range(len(fault_cases)):
+                exec_case_data['input_params']['fault'].append(fault_cases[i])
+                i += 1
+        if block_cases is not None:
+            exec_case_data['input_params']['block'] = list()
+            for i in range(len(block_cases)):
+                exec_case_data['input_params']['block'].append(block_cases[i])
+                i += 1
         exec_case_data['input_params']['success'][0] = pass_cases
     read_exec_file.close()
     # write execute case yaml
-    with open("../../testdata/execc/execc.yml", "w", encoding="utf-8") as write_exec_file:
+    with open("./testdata/execc/execc.yml", "w", encoding="utf-8") as write_exec_file:
         yaml.dump(exec_case_data, write_exec_file, allow_unicode=True, default_flow_style=False)
     write_exec_file.close()
 
     # webdriver
-    while(True):
+    while True:
         headless = str.upper(input("请选择是否查看运行过程，命令行模式/浏览器运行模式（Y/N）："))
         if headless == "Y":
             driver = webdriver.Chrome()

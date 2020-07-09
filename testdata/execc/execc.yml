@@ -7,13 +7,11 @@ expect_output:
   name: //span[text()='请选择版本：']
 input_params:
   block:
-  - C331
-  - C330
+  - C1
   fault:
-  - C333
-  - C332
+  - C1
   success:
-  - C220
+  - C1
 pre_case:
 - name: personal_work
   suite: personalwork

@@ -6,8 +6,8 @@ expect_output:
   loc_type: xpath
   name: //a[@role='desktop']
 input_params:
-  password: xu_j22@ecidi
-  username: xu_j22
+  password: null
+  username: null
 pre_case: null
 project_name: 测试业务系统
 test_step:
