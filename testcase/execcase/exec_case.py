@@ -10,8 +10,6 @@ from pages.exec_case import ExecCase
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException, InvalidArgumentException
 from time import sleep
 import yaml
@@ -24,6 +22,10 @@ def exec_case(driver, page, yml):
     # 解析测试数据，返回dict
     parse = Parse()
     parse.call_pre_case(driver, page, yml)
+
+    check_version_loc = "By." + str.upper(parse.data['check_version'][0]["loc_type"])
+    check_version_attr_name = parse.data["check_version"][0]["name"]
+    version = parse.data["check_version"][1]['version']
 
     # 确认用例编号查询定位方式，属性内容
     query_loc = "By." + str.upper(parse.data['test_step'][0]["loc_type"])
@@ -70,8 +72,12 @@ def exec_case(driver, page, yml):
     execc = ExecCase(driver)
     fault_cases = parse.data["input_params"]["fault"]
     block_cases = parse.data["input_params"]["block"]
-    pass_case = parse.data["input_params"]["success"][0]
+    pass_case = parse.data["input_params"]["success"]
     js = "var q=document.documentElement.scrollTop=1000"
+    # 选择版本
+    if version:
+        execc.check_version(check_version_loc, check_version_attr_name, version)
+
     # 非空判断
     if fault_cases is not None:
         for fault in fault_cases:
@@ -119,28 +125,34 @@ def exec_case(driver, page, yml):
             execc.exec_case(block_loc, block_attr_name)
             try:
                 execc.back_from_issue(back_from_exec_loc, back_from_exec_attr_name)
-            except:
-                logging.info("back to my case list.")
+            except (NoSuchElementException,InvalidArgumentException, Exception) as e:
+                logging.error("back to my case list occurred error " + e)
             logging.info("executed the case No. %s to Block" % block)
 
         logging.info("executed the Block Cases %s" % block_cases)
 
     execc.query_case(query_loc, query_attr_name, pass_case)
     case_no = exec_span_attr_name.replace("caseno", pass_case)
-    execc.enter_exec_page(exec_span_loc, case_no)
-    execc.exec_case(pass_loc, pass_attr_name)
+    while True:
+        try:
+            execc.enter_exec_page(exec_span_loc, case_no)
+            execc.exec_case(pass_loc, pass_attr_name)
+            break
+        except (NoSuchElementException, InvalidArgumentException, AttributeError) as e:
+            logging.error(e)
+            execc.next_page(next_page_loc, next_page_attr_name)
     logging.info("executed the case %s to Pass." % pass_case)
     result = False
-    while (not result):
-       try:
-           code_value = execc.execute_js("return document.getElementById('code').value")
-           execc.exec_case(pass_loc, pass_attr_name)
-           logging.info("executed the case %s to Pass." % code_value)
-       except:
-           execc.get_expect(expect_loc, expect_attr_name)
-           result = True
-           logging.info("Completed execute TestCase!")
-           break
+    while True:
+        try:
+            code_value = execc.execute_js("return document.getElementById('code').value")
+            execc.exec_case(pass_loc, pass_attr_name)
+            logging.info("executed the case %s to Pass." % code_value)
+        except (NoSuchElementException, InvalidArgumentException, Exception) as e:
+            execc.get_expect(expect_loc, expect_attr_name)
+            result = True
+            logging.info("Completed execute TestCase!")
+            break
 
     return result
 
@@ -189,6 +201,7 @@ if __name__ == "__main__":
         username = is_empty("请输入用户名：")
         password = is_empty("请输入密码：")
     project_name = is_empty("请输入项目全称：")
+    version_name = input("请输入版本名称（请注意是版本名称，输入为空时为默认版本）：")
     fault_cases = input_handle("请输入执行失败的用例编号，以逗号隔开（请注意区分中英文字符）：")
     block_cases = input_handle("请输入执行阻塞的用例编号，以逗号隔开（请注意区分中英文字符）：")
     pass_cases = is_empty("请输入执行通过case中最大的编号：")
@@ -199,7 +212,7 @@ if __name__ == "__main__":
         # with open("./testdata/loginpage/login_by_manager.yml", "r", encoding="utf-8") as read_login_file:
         # 直接执行
         user_info = {"username": username, "password": password}
-        modify_yml("./testdata/loginpage/login_by_manager.yml", username=username,password=password)
+        modify_yml("../../testdata/loginpage/login_by_manager.yml", username=username,password=password)
     #     with open("../../testdata/loginpage/login_by_manager.yml", "r", encoding="utf-8") as read_login_file:
     #         login_data = yaml.full_load(read_login_file.read())
     #         # print("赋值前" + data['input_params']['username'])
@@ -213,7 +226,7 @@ if __name__ == "__main__":
     #     write_login_file.close()
     #
     project_info = {"sendkeys": project_name}
-    modify_yml("./testdata/personalwork/personal_work.yml", sendkeys=project_name)
+    modify_yml("../../testdata/personalwork/personal_work.yml", sendkeys=project_name)
     # # read personal work yaml
     # with open("../../testdata/personalwork/personal_work.yml", "r", encoding="utf-8") as read_personal_work:
     #     personal_work_data = yaml.full_load(read_personal_work.read())
@@ -225,23 +238,27 @@ if __name__ == "__main__":
     # write_personal_work.close()
 
     # read execute case yaml
-    with open("./testdata/execc/execc.yml", "r", encoding="utf-8") as read_exec_file:
+    with open("../../testdata/execc/execc.yml", "r", encoding="utf-8") as read_exec_file:
         exec_case_data = yaml.full_load(read_exec_file.read())
+        # 清除原有数据
+        exec_case_data['input_params']['fault'] = list()
+        exec_case_data['input_params']['block'] = list()
+        if version_name:
+            exec_case_data['check_version'][1]['version'] = version_name
+        else:
+            exec_case_data['check_version'][1]['version'] = None
         if fault_cases is not None:
-            # 清除原有数据
-            exec_case_data['input_params']['fault'] = list()
             for i in range(len(fault_cases)):
                 exec_case_data['input_params']['fault'].append(fault_cases[i])
                 i += 1
         if block_cases is not None:
-            exec_case_data['input_params']['block'] = list()
             for i in range(len(block_cases)):
                 exec_case_data['input_params']['block'].append(block_cases[i])
                 i += 1
-        exec_case_data['input_params']['success'][0] = pass_cases
+        exec_case_data['input_params']['success'] = pass_cases
     read_exec_file.close()
     # write execute case yaml
-    with open("./testdata/execc/execc.yml", "w", encoding="utf-8") as write_exec_file:
+    with open("../../testdata/execc/execc.yml", "w", encoding="utf-8") as write_exec_file:
         yaml.dump(exec_case_data, write_exec_file, allow_unicode=True, default_flow_style=False)
     write_exec_file.close()
 

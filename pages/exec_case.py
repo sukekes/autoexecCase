@@ -9,10 +9,17 @@ from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
 from common.log import logging
 
 
 class ExecCase(BasePage):
+
+    # 检查版本
+    def check_version(self, loc_type, attr_name, version):
+        self.refresh()
+        version_check = Select(self.find_element(eval(loc_type), attr_name))
+        version_check.select_by_visible_text(version)
 
     # 查询用例
     def query_case(self, loc_type, attr_name, caseNo):

@@ -2,9 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from time import sleep
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import Select
 
 options = Options()
 
@@ -50,12 +49,11 @@ driver.find_element(By.XPATH, "//a[@role='tasks-testcases']").click()
 # a = driver.find_element(By.ID, "code")
 # driver.refresh()
 # driver.find_element(By.ID, "pass").click()
-sleep(2)
 # a = driver.execute_script("return document.getElementById('code').value")
 # b = driver.find_element(By.ID, "code").text
-a = driver.find_element(By.XPATH, "//span[@class='ui-icon ui-icon-seek-next']")
-
-print(a.is_enabled())
+a = Select(driver.find_element(By.ID, "version_name"))
+a.select_by_visible_text("v2.7")
 # a = driver.find_element(By.ID, "code")
 # print(a.value_of_css_property("code"))
+sleep(20)
 driver.quit()

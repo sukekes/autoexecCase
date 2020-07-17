@@ -2,16 +2,19 @@ base_url: url
 case_description: 查找并执行用例
 case_name: execc
 case_num: testsuite_003
+check_version:
+- loc_type: id
+  name: version_name
+- version: null
 expect_output:
   loc_type: xpath
   name: //span[text()='请选择版本：']
 input_params:
-  block:
-  - C1
-  fault:
-  - C1
-  success:
-  - C1
+  block: []
+  fault: []
+  success: C19
+  sucess:
+  - C156
 pre_case:
 - name: personal_work
   suite: personalwork
