@@ -122,11 +122,12 @@ def exec_case(driver, page, yml):
                     #     logging.info("the case %s is not found. please check your input params and rerun the script."
                     #                  % block)
                     #     break
-            execc.exec_case(block_loc, block_attr_name)
+
             try:
-                execc.back_from_issue(back_from_exec_loc, back_from_exec_attr_name)
-            except (NoSuchElementException,InvalidArgumentException, Exception) as e:
-                logging.error("back to my case list occurred error " + e)
+                execc.exec_case(block_loc, block_attr_name)
+                execc.back_from_block(back_from_exec_loc, back_from_exec_attr_name)
+            except (NoSuchElementException, InvalidArgumentException, AttributeError, Exception) as e:
+                logging.error(e)
             logging.info("executed the case No. %s to Block" % block)
 
         logging.info("executed the Block Cases %s" % block_cases)
@@ -212,7 +213,7 @@ if __name__ == "__main__":
         # with open("./testdata/loginpage/login_by_manager.yml", "r", encoding="utf-8") as read_login_file:
         # 直接执行
         user_info = {"username": username, "password": password}
-        modify_yml("../../testdata/loginpage/login_by_manager.yml", username=username,password=password)
+        modify_yml("../../testdata/loginpage/login_by_manager.yml", username=username, password=password)
     #     with open("../../testdata/loginpage/login_by_manager.yml", "r", encoding="utf-8") as read_login_file:
     #         login_data = yaml.full_load(read_login_file.read())
     #         # print("赋值前" + data['input_params']['username'])
@@ -264,7 +265,7 @@ if __name__ == "__main__":
 
     # webdriver
     while True:
-        headless = str.upper(input("请选择是否查看运行过程，命令行模式/浏览器运行模式（Y/N）："))
+        headless = str.upper(input("请选择是否查看运行过程，浏览器运行模式/命令行模式（Y/N）："))
         if headless == "Y":
             driver = webdriver.Chrome()
             break

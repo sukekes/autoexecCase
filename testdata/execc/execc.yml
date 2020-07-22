@@ -5,14 +5,16 @@ case_num: testsuite_003
 check_version:
 - loc_type: id
   name: version_name
-- version: null
+- version: version0520case
 expect_output:
   loc_type: xpath
   name: //span[text()='请选择版本：']
 input_params:
-  block: []
+  block:
+  - C87
+  - C88
   fault: []
-  success: C19
+  success: C89
   sucess:
   - C156
 pre_case:

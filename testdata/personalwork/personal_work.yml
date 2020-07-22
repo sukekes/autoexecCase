@@ -6,7 +6,7 @@ expect_output:
   loc_type: xpath
   name: //div[text()='用例编号']
 input_params:
-  sendkeys: 合同预编号
+  sendkeys: 测试数据
 pre_case:
 - name: login_by_manager
   suite: loginpage
